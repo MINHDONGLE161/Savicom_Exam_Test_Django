@@ -33,16 +33,17 @@ django-admin startproject test_exam
 python manage.py startapp students
 # 1.	 model.py
 
-from django.db import models 
-class Student(models.Model):  
-    name        = models.CharField(max_length=25, unique=True) 
-    age         = models.IntegerField(null=False) 
-    birthdate   = models.DateTimeField(null=False) 
+    from django.db import models 
 
-    class Meta:                                     
+    class Student(models.Model):  
+     name        = models.CharField(max_length=25, unique=True) 
+     age         = models.IntegerField(null=False) 
+     birthdate   = models.DateTimeField(null=False) 
+
+     class Meta:                                     
         db_table = 'student'                         
 
-    def to_json(self):
+     def to_json(self):
         return {
             'id': self.id,
             'name': self.name,
@@ -52,14 +53,15 @@ class Student(models.Model):
 
 # 2.	App
 
-from django.apps import AppConfig
-class StudentsConfig(AppConfig):
+ from django.apps import AppConfig
+
+ class StudentsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'students'
 
 # 3.	Setting 
 
-INSTALLED_APPS = [
+ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -67,19 +69,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'students'
-]
-ALWAYS_CHECK_C=True
-MULTIPLY_A=3
+] 
+ ALWAYS_CHECK_C=True
+ MULTIPLY_A=3
 
 
 # 4. Service.py	:the requirement of “do_lots_of_things” will be carried out in Services: ProductionClass.Method 
 
-from django.core.exceptions import ValidationError
-import datetime
-from django.conf import settings
-MULTIPLY_A=settings.MULTIPLY_A
-ALWAYS_CHECK_C=settings.ALWAYS_CHECK_C
-class ProductionClass:
+ from django.core.exceptions import ValidationError
+ import datetime
+ from django.conf import settings
+ MULTIPLY_A=settings.MULTIPLY_A
+ ALWAYS_CHECK_C=settings.ALWAYS_CHECK_C
+ class ProductionClass:
         @classmethod
         def method(cls, a, b, c):
             if not isinstance(a, int):
@@ -98,7 +100,7 @@ class ProductionClass:
 # 5.	Test.py
 # 5A) Service Test
 
-class StudentTests_Service(TestCase):
+ class StudentTests_Service(TestCase):
     def test_not_integer(self):
         is_integer = ProductionClass.method("A","B",datetime.date(2022,1,2))
         self.assertEqual(is_integer, "This field accepts interger only")
@@ -117,13 +119,13 @@ class StudentTests_Service(TestCase):
 
 # 5B) API TEST, Mock, Patch, Magic Mock
 
-with patch.object(ProductionClass, 'method', return_value=None) as mock_method:
+ with patch.object(ProductionClass, 'method', return_value=None) as mock_method:
      thing = ProductionClass()
      thing.method(1, "a", datetime.now)
 
      mock_method.assert_called_once_with(1, "a", datetime.now)
-@patch('students.services.ProductionClass.method', return_value=3)
-def test_list_student(self, ProductionClass):
+ @patch('students.services.ProductionClass.method', return_value=3)
+ def test_list_student(self, ProductionClass):
         response = client.get('/students/')
         result = {'data': []}
         self.assertEqual(response.status_code, 200)
@@ -132,11 +134,11 @@ def test_list_student(self, ProductionClass):
 
 # 6.	View.py
 
-from django.shortcuts import render
-from django.http import JsonResponse
-from .models import Student
-from .services import ProductionClass
-def list_student(request):
+ from django.shortcuts import render
+ from django.http import JsonResponse
+ from .models import Student
+ from .services import ProductionClass
+ def list_student(request):
     students = Student.objects.all()
     data = []
     for student in students:
@@ -146,10 +148,10 @@ def list_student(request):
 
 # 7. URL
 
-from django.contrib import admin
-from django.urls import path
-from students import views as students_views
-urlpatterns = [
+ from django.contrib import admin
+ from django.urls import path
+ from students import views as students_views
+ urlpatterns = [
     path('admin/', admin.site.urls),
     path('students/', students_views.list_student, name='list_student')
-]
+ ]
