@@ -36,14 +36,14 @@ django-admin startproject test_exam
 python manage.py startapp students
 # 1.	 model.py
 
-from django.db import models \\
-class Student(models.Model):  \\
-    name        = models.CharField(max_length=25, unique=True) \\
-    age         = models.IntegerField(null=False) \\
-    birthdate   = models.DateTimeField(null=False) \\
+from django.db import models 
+class Student(models.Model):  
+    name        = models.CharField(max_length=25, unique=True) 
+    age         = models.IntegerField(null=False) 
+    birthdate   = models.DateTimeField(null=False) 
 
-    class Meta:                                     \\
-        db_table = 'student'                         \\
+    class Meta:                                     
+        db_table = 'student'                         
 
     def to_json(self):
         return {
