@@ -1,4 +1,4 @@
-# A. Question:
+## A. Question:
 The attached python file should be inserted into a new Django project, so that unit tests can be run against it. It should follow the principles of unit testing in that it only tests the many results depending on the inputs and mocked conditions, and minimizes exposure to external logic, but has checks to ensure that calls to external logic are made. It is expected to make heavy use of mocking.
 
 Please use Django / Python for your solution. The logic and thought process demonstrated are the most important considerations rather than truly functional code, however code presentation is important as well as the technical aspect. If you cannot settle on a single perfect solution, you may also discuss alternative solutions to demonstrate your understanding of potential trade-offs as you encounter them. Of course if you consider a solution is too time consuming you are also welcome to clarify or elaborate on potential improvements or multiple solution approaches conceptually to demonstrate understanding and planned solution.
@@ -24,10 +24,7 @@ def do_lots_of_things(a, b, c):
 
 
 
-
-
-
-# B.Solutions:
+## B.Solutions:
 
 Firstly, to test a bunch of things which mentioned in the question we need to create a project contains of above parameters. I decided to choose the data of student information with three fields: Name of student (string format) , Age of student (int format) , and Birthdate of student (date time format).
 # Step 1: Create project test_exam
@@ -36,14 +33,14 @@ django-admin startproject test_exam
 python manage.py startapp students
 # 1.	 model.py
 
-from django.db import models \\
-class Student(models.Model):  \\
-    name        = models.CharField(max_length=25, unique=True) \\
-    age         = models.IntegerField(null=False) \\
-    birthdate   = models.DateTimeField(null=False) \\
+from django.db import models 
+class Student(models.Model):  
+    name        = models.CharField(max_length=25, unique=True) 
+    age         = models.IntegerField(null=False) 
+    birthdate   = models.DateTimeField(null=False) 
 
-    class Meta:                                     \\
-        db_table = 'student'                         \\
+    class Meta:                                     
+        db_table = 'student'                         
 
     def to_json(self):
         return {
