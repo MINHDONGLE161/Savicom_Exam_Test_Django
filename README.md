@@ -36,14 +36,14 @@ django-admin startproject test_exam
 python manage.py startapp students
 # 1.	 model.py
 
-from django.db import models
-class Student(models.Model):
-    name        = models.CharField(max_length=25, unique=True)
-    age         = models.IntegerField(null=False)
-    birthdate   = models.DateTimeField(null=False)
+from django.db import models \\
+class Student(models.Model):  \\
+    name        = models.CharField(max_length=25, unique=True) \\
+    age         = models.IntegerField(null=False) \\
+    birthdate   = models.DateTimeField(null=False) \\
 
-    class Meta:
-        db_table = 'student'
+    class Meta:                                     \\
+        db_table = 'student'                         \\
 
     def to_json(self):
         return {
@@ -75,7 +75,7 @@ ALWAYS_CHECK_C=True
 MULTIPLY_A=3
 
 
-# 4.	The requirement of “do_lots_of_things” will be carried out in Services: Production Class service.py
+# 4. Service.py	:the requirement of “do_lots_of_things” will be carried out in Services: ProductionClass.Method 
 
 from django.core.exceptions import ValidationError
 import datetime
