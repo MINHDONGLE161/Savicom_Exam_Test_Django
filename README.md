@@ -27,11 +27,11 @@ def do_lots_of_things(a, b, c):
 ## B.Solutions:
 
 Firstly, to test a bunch of things which mentioned in the question we need to create a project contains of above parameters. I decided to choose the data of student information with three fields: Name of student (string format) , Age of student (int format) , and Birthdate of student (date time format).
-# Step 1: Create project test_exam
+### Step 1: Create project test_exam
 django-admin startproject test_exam
-# Step2: Create students app
+### Step2: Create students app
 python manage.py startapp students
-# 1.	 model.py
+### 1.	 model.py
 
     from django.db import models 
 
@@ -51,7 +51,7 @@ python manage.py startapp students
             'birthdate': self.birthdate,
         }
 
-# 2.	App
+### 2.	App
 
  from django.apps import AppConfig
 
@@ -59,7 +59,7 @@ python manage.py startapp students
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'students'
 
-# 3.	Setting 
+### 3.	Setting 
 
  INSTALLED_APPS = [
     'django.contrib.admin',
@@ -74,7 +74,7 @@ python manage.py startapp students
  MULTIPLY_A=3
 
 
-# 4. Service.py	:the requirement of “do_lots_of_things” will be carried out in Services: ProductionClass.Method 
+### 4. Service.py	:the requirement of “do_lots_of_things” will be carried out in Services: ProductionClass.Method 
 
  from django.core.exceptions import ValidationError
  import datetime
@@ -97,7 +97,7 @@ python manage.py startapp students
                 return a*3
             return a*MULTIPLY_A
 
-# 5.	Test.py
+### 5.	Test.py
 # 5A) Service Test
 
  class StudentTests_Service(TestCase):
@@ -117,7 +117,7 @@ python manage.py startapp students
         is_3a = ProductionClass.method(3,"bar",datetime.date(2022,1,2))
         self.assertEqual(is_3a, 9)
 
-# 5B) API TEST, Mock, Patch, Magic Mock
+### 5B) API TEST, Mock, Patch, Magic Mock
 
  with patch.object(ProductionClass, 'method', return_value=None) as mock_method:
      thing = ProductionClass()
@@ -132,7 +132,7 @@ python manage.py startapp students
         self.assertEqual(response.json(), result)
 
 
-# 6.	View.py
+### 6.	View.py
 
  from django.shortcuts import render
  from django.http import JsonResponse
@@ -146,7 +146,7 @@ python manage.py startapp students
             data.append(student.to_json())
     return JsonResponse({'data': data})
 
-# 7. URL
+### 7. URL
 
  from django.contrib import admin
  from django.urls import path
