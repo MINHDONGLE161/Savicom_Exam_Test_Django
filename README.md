@@ -34,8 +34,8 @@ django-admin startproject test_exam
 Step2: Create students app
 python manage.py startapp students
 a.	Student Model model.py
-from django.db import models
 
+from django.db import models
 class Student(models.Model):
     name        = models.CharField(max_length=25, unique=True)
     age         = models.IntegerField(null=False)
@@ -53,12 +53,14 @@ class Student(models.Model):
         }
 
 b.	App
-from django.apps import AppConfig
 
+from django.apps import AppConfig
 class StudentsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'students'
+
 c.	Setting 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -68,19 +70,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'students'
 ]
-
 ALWAYS_CHECK_C=True
 MULTIPLY_A=3
 
 
 d.	The requirement of “do_lots_of_things” will be carried out in Services: Production Class service.py
+
 from django.core.exceptions import ValidationError
 import datetime
 from django.conf import settings
-
 MULTIPLY_A=settings.MULTIPLY_A
 ALWAYS_CHECK_C=settings.ALWAYS_CHECK_C
-
 class ProductionClass:
         @classmethod
         def method(cls, a, b, c):
@@ -99,6 +99,7 @@ class ProductionClass:
 
 e.	Test.py
 Service Test
+
 class StudentTests_Service(TestCase):
     def test_not_integer(self):
         is_integer = ProductionClass.method("A","B",datetime.date(2022,1,2))
@@ -117,6 +118,7 @@ class StudentTests_Service(TestCase):
         self.assertEqual(is_3a, 9)
 
 API TEST, Mock, Patch, Magic Mock
+
 with patch.object(ProductionClass, 'method', return_value=None) as mock_method:
      thing = ProductionClass()
      thing.method(1, "a", datetime.now)
@@ -131,11 +133,11 @@ def test_list_student(self, ProductionClass):
 
 
 f.	View.py
+
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Student
 from .services import ProductionClass
-
 def list_student(request):
     students = Student.objects.all()
     data = []
@@ -145,6 +147,7 @@ def list_student(request):
     return JsonResponse({'data': data})
 
 g. URL
+
 from django.contrib import admin
 from django.urls import path
 from students import views as students_views
